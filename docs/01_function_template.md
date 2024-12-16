@@ -215,27 +215,6 @@ constexpr auto max(const T& a, const U& b) {
 int main() { static_assert(jc::max(1, 3.14) == 3.14); }
 ```
 
-## [type traits](https://en.cppreference.com/w/cpp/header/type_traits)
-
-* 对于类型进行计算的模板称为 type traits，也可以称为元函数，比如用 [std::common_type](https://en.cppreference.com/w/cpp/types/common_type) 来计算不同类型中最通用的类型
-
-```cpp
-#include <cassert>
-#include <type_traits>
-
-namespace jc {
-
-template <typename T, typename U, typename RT = std::common_type_t<T, U>>
-RT max(const T& a, const U& b) {
-  return a < b ? b : a;
-}
-
-}  // namespace jc
-
-int main() { assert(jc::max(1, 3.14) == 3.14); }
-```
-
-
 
 * 推断返回值时, 不能用自身作为推断表达式的一部分,因为此时函数本身还未声明
 ``` cpp
@@ -268,6 +247,27 @@ auto main()
     return 0;
 }
 ```
+
+## [type traits](https://en.cppreference.com/w/cpp/header/type_traits)
+
+* 对于类型进行计算的模板称为 type traits，也可以称为元函数，比如用 [std::common_type](https://en.cppreference.com/w/cpp/types/common_type) 来计算不同类型中最通用的类型
+
+```cpp
+#include <cassert>
+#include <type_traits>
+
+namespace jc {
+
+template <typename T, typename U, typename RT = std::common_type_t<T, U>>
+RT max(const T& a, const U& b) {
+  return a < b ? b : a;
+}
+
+}  // namespace jc
+
+int main() { assert(jc::max(1, 3.14) == 3.14); }
+```
+
 
 
 
