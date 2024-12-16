@@ -167,12 +167,13 @@ struct A<false> {
 namespace Cot{
 
 template<typename T>
-void print(T&& t){
+void print(const T& t){
   std::cout << t << std::endl;
 }
 
 template<typename T, typename... Args>
 void print(const T& t, Args&&... args){
+  std::cout << t << std::endl;
   print(std::forward<Args>(args)...);
 }
 
