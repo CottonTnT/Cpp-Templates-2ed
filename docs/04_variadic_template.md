@@ -220,6 +220,32 @@ int main() {
 }
 ```
 
+折叠表达式进一步简化需要特化与重载来实现分支控制的一些情况
+
+```cpp
+#include <memory>
+#include <iostream>
+template <typename T>
+auto mysum(const T& t)
+    -> T
+{
+    return t;
+}
+template <typename T, typename... Args>
+auto mysum(const T& t, Args&&... args)
+    -> std::common_type_t<T, Args...>
+{
+     return t + mysum(std::forward<Args>(args)...);
+}
+
+auto main()
+    -> int
+{
+    std::cout << mysum(1, 2, 3, 7.7);
+    return 0;
+}
+```
+
 * 对于空扩展需要决定类型和值，空的一元折叠表达式通常会产生错误，除了三种例外情况
   * 一个 `&&` 的一元折叠的空扩展产生值 true
   * 一个 `||` 的一元折叠的空扩展产生值 false
