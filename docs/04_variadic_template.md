@@ -693,3 +693,32 @@ int main() {
   jc::apply(Print{}, t);  // 3.14 42 hello world
 }
 ```
+
+上面的IndexSequence代码看着费劲,自己再实现了一版
+```cpp
+template <std::size_t... Index>
+struct IndexSequence {
+    using type = IndexSequence<Index...>;
+};
+
+
+template <typename List1, typename List2>
+struct concat2;
+
+template <std::size_t... List1, std::size_t... List2>
+struct concat2<IndexSequence<List1...>, IndexSequence<List2...>>
+    : IndexSequence<List1..., List2...> {
+};
+
+template <typename size_t N>
+struct MakeIndexSequenceImpl {
+    using type = typename concat2<typename MakeIndexSequenceImpl<N - 1>::type, IndexSequence<N - 1>>::type;
+};
+
+template <>
+struct MakeIndexSequenceImpl<1> {
+    using type = IndexSequence<0>;
+};
+
+
+```
