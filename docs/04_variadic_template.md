@@ -131,7 +131,7 @@ void print(const T& t, Args&&... args) {
 int main() { jc::print(3.14, 42, std::string{"hello"}, "world"); }
 ```
 
-* 在 C++11 中可以利用偏特化来达到 if constexpr 的效果
+* 在 C++11 中可以利用偏特化来达到 if constexpr 的效果，可以说`C++ 17`通过`if constexpr`简化一些需要偏特化去做分支控制的场景
 
 ```cpp
 #include <iostream>
