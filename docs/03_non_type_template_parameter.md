@@ -330,12 +330,41 @@ int main() {
 }
 ```
 
-* 常量表达式：变量模板可以用来定义常量表达式，这些表达式可以在编译时求值
+* 元编程：变量模板可以用来定义常量表达式，这些表达式可以在编译时求值
 ```cpp
 
 template <int N>
-int factorial = N * factorial<N - 1>;
+constexpr int factorial = N * factorial<N - 1>;
 template <>
-int factorial<1> = 1;
+constexpr int factorial<1> = 1;
+
+int main() {
+    std::cout << factorial<5> << std::endl;  // 输出 120
+    return 0;
+}
 ```
+
+*求解类型特性: 变量模板可以用来定义类型特性，这些特性可以用来描述类型的属性。例如，你可以使用变量模板来定义一个类型是否是可复制的
+```cpp
+template <typename T>
+bool is_copyable = std::is_copy_constructible<T>::value;
+
+int main() {
+    std::cout << std::boolalpha << is_copyable<int> << std::endl;  // 输出 true
+    return 0;
+}
+
+\\用来定义配置选项，这些选项可以用来控制程序的行为。例如，你可以使用变量模板来定义一个日志级别：
+template <int Level>
+constexpr bool log_enabled = Level >= 3;
+
+int main() {
+    if (log_enabled<4>) {
+        std::cout << "日志信息" << std::endl;
+    }
+    return 0;
+}
+```
+
+
 
