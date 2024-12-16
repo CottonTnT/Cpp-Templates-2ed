@@ -329,3 +329,13 @@ int main() {
   assert(jc::arr<10>[0] == 42);
 }
 ```
+
+* 常量表达式：变量模板可以用来定义常量表达式，这些表达式可以在编译时求值
+```cpp
+
+template <int N>
+int factorial = N * factorial<N - 1>;
+template <>
+int factorial<1> = 1;
+```
+
