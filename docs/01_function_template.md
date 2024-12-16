@@ -235,6 +235,42 @@ RT max(const T& a, const U& b) {
 int main() { assert(jc::max(1, 3.14) == 3.14); }
 ```
 
+
+
+* 推断返回值时, 不能用自身作为推断表达式的一部分,因为此时函数本身还未声明
+``` cpp
+#include <memory>
+#include <iostream>
+template <typename T>
+auto mysum(const T& t)
+    -> T
+{
+    return t;
+}
+// 正确示范
+// template <typename T, typename... Args> auto mysum(const T& t, Args&&... args)
+//     -> std::common_type_t<T, Args...>
+// // -> int
+// {
+//     return t + mysum(std::forward<Args>(args)...);
+// }
+// 错误示范
+template <typename T, typename... Args>
+auto mysum(const T& t, Args&&... args)
+    -> decltype(t + mysum(std::forward<Args>(args)...))
+{
+    return t + mysum(std::forward<Args>(args)...);
+}
+auto main()
+    -> int
+{
+    std::cout << mysum(1, 2, 3, 7.7);
+    return 0;
+}
+```
+
+
+
 ## 重载
 
 * 当类型同时匹配普通函数和模板时，优先匹配普通函数
