@@ -131,7 +131,7 @@ void print(const T& t, Args&&... args) {
 int main() { jc::print(3.14, 42, std::string{"hello"}, "world"); }
 ```
 
-* 在 C++11 中可以利用偏特化来达到 if constexpr 的效果，可以说`C++ 17`通过`if constexpr`简化一些需要偏特化去做分支控制的场景
+* 在 C++11 中可以利用类的偏特化或函数的重载来达到 if constexpr 的效果，可以说`C++ 17`通过`if constexpr`简化一些需要偏特化去做分支控制的场景
 
 ```cpp
 #include <iostream>
@@ -164,7 +164,20 @@ struct A<false> {
 
 }  // namespace jc
 
-int main() { jc::print(3.14, 42, std::string{"hello"}, "world"); }
+namespace Cot{
+
+template<typename T>
+void print(T&& t){
+  std::cout << t << std::endl;
+}
+
+template<typename T, typename... Args>
+void print(const T& t, Args&&... args){
+  print(std::forward<Args>(args)...);
+}
+
+}
+int main() { jc::print(3.14, 42, std::string{"hello"}, "world"); Cot::print(3.14, 42, std::string{"hello"}, "world"); }
 ```
 
 ## [折叠表达式（Fold Expression）](https://en.cppreference.com/w/cpp/language/fold)
