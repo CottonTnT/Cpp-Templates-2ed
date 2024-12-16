@@ -37,6 +37,7 @@ int main() {
   jc::test("%.2f %d %s %s", 3.14, 42, std::string{"hello"}.c_str(), "world");
 }
 ```
+std::va_list 实现基于[栈传参的原理](https://blog.csdn.net/haokan123456789/article/details/135371987)，依赖于不同的平台的calling convention，因此需要一个如printf一样的fmt参数，来说明栈上储存变量的类型
 
 * C++11 引入了变参模板，用省略号表示一个[参数包](https://en.cppreference.com/w/cpp/language/parameter_pack)，类型名后接省略号表示任意数量给定类型的参数。在表达式后跟省略号，如果表达式中有参数包，就会把表达式应用到参数包中的每个参数。如果表达式中出现两次参数包，对整个表达式扩展，而不会做笛卡尔积计算
 
