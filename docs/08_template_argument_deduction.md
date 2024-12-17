@@ -189,7 +189,7 @@ int main() {
 }
 ```
 
-* SFINAE 只发生于函数模板替换的即时上下文中，对于模板定义中不合法的表达式，不会使用 SFINAE 机制
+* SFINAE 只发生于函数模板替换的`即时上下文`中，对于模板定义中不合法的表达式，不会使用 SFINAE 机制
 
 ```cpp
 namespace jc {
@@ -218,7 +218,7 @@ using B = decltype(g(X{}, X{}));  // 错误：g<X, X> 的实例化非法
 int main() {}
 ```
 
-* 一个简单的 SFINAE 技巧是使用尾置返回类型，用 devltype 和逗号运算符定义返回类型，在 decltype 中定义必须有效的表达式
+* 一个简单的 SFINAE 技巧是使用尾置返回类型，用 decltype 和逗号运算符定义返回类型，在 decltype 中定义必须有效的表达式
 
 ```cpp
 #include <cassert>
